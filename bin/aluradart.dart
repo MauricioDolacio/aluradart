@@ -1,9 +1,29 @@
 import 'package:aluradart/aluradart.dart' as aluradart;
 
 void main() {
-  int idade = 26;
-  double altura = 780e6;
-  bool geek = true;
-  String nome = 'Maurício';
-  print('Bom dia, eu sou $nome');
+  // Aula 1: Variaveis
+
+  // int idade = 26;
+  // double altura = 780e6;
+  // bool geek = true;
+  // String nome = 'Maurício';
+  // print('Bom dia, eu sou $nome');
+
+  //Aula 2: Listas
+
+  String nome = 'Ricardo';
+  List<String> listanomes = ['Ricardo', 'Natalia', 'Rafael', 'Luiz Otavio', 'Nicolas'];
+  List<dynamic> mauricio = [19,1.86,true,'Mauricio Dolacio','Mauricio'];
+
+  print(listanomes[0]);
+  print(listanomes.length);
+  print(listanomes.reversed);
+  print('Eu sou ${mauricio[4]} \n'
+  'eu tenho ${mauricio[0]} anos\n'
+  'e tenho ${mauricio[1]}m de altura');
+
+  var varIndefinida = 1; //dart irá selecionar qual será o tipo dessa variavel. Pesa mais o codigo
+  const int varConst = 20; //o valor desta variavel não pode ser mudado
+  final String varFinal; //essa variavel só pode ser alterada uma vez.
+  varFinal = 'final'; //tentar fazer mais alterações irá causar um erro.
 }
