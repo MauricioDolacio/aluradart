@@ -1,5 +1,4 @@
 //Aula de Funções e Escopo
-
 import 'package:aluradart/aluradart.dart' as aluradart;
 
 void main() {
@@ -17,6 +16,7 @@ void main() {
   Legumes mandioca1 = Legumes('Macaxeira', 1200, 'Marrom', true);
   Fruta banana1 = Fruta('Banana', 75, 'Amarela', 'Doce', 12);
   Citricas limao1 = Citricas('Limão', 100, 'Verde', 'Azedo', 5, 9);
+  Nozes macadamia1 = Nozes('Macadamia', 5, 'Laranja', 'Noz', 30, 35);
 
   banana1.printAlimento();
   mandioca1.printAlimento();
@@ -24,6 +24,9 @@ void main() {
 
   mandioca1.cozinhar();
   limao1.existeRefri(true);
+
+  banana1.separarIngredientes();
+  macadamia1.fazerMassa();
 }
 
 //Função
@@ -63,7 +66,7 @@ class Alimento {
 }
 
 //Classe filha de Alimento (Objeto/Herança)
-class Fruta extends Alimento {
+class Fruta extends Alimento implements Bolo {
   String sabor;
   int diasDesdeColheita;
   bool? isMadura;
@@ -80,10 +83,30 @@ class Fruta extends Alimento {
     print(
         'A sua $nome foi colhida a $diasDesdeColheita dias, e precisa de $diasParaMadura para poder comer. Ela esta madura? $isMadura');
   }
+
+  void fazerSuco() {
+    print('Você fez um ótimo suco de $nome');
+  }
+
+  //Implements da classe abstrata Bolo
+  @override
+  void assar() {
+    print('Catar a fruta');
+  }
+
+  @override
+  void fazerMassa() {
+    print('Misturar');
+  }
+
+  @override
+  void separarIngredientes() {
+    print('Colocar no forno');
+  }
 }
 
 //Classe filha de Alimento (Objeto/Herança)
-class Legumes extends Alimento {
+class Legumes extends Alimento implements Bolo {
   bool isPrecisaCozinhar;
 
   Legumes(String nome, double peso, String cor, this.isPrecisaCozinhar)
@@ -96,6 +119,15 @@ class Legumes extends Alimento {
       print('Nem precisa cozinhar!');
     }
   }
+
+  @override
+  void assar() {}
+
+  @override
+  void fazerMassa() {}
+
+  @override
+  void separarIngredientes() {}
 }
 
 //Classe Alimento > Fruta > Citricas
@@ -114,4 +146,26 @@ class Citricas extends Fruta {
       print('Não existe refri de $nome');
     }
   }
+}
+
+class Nozes extends Fruta {
+  double porcentagemOleoNatural;
+
+  Nozes(String nome, double peso, String cor, String sabor,
+      int diasDesdeColheita, this.porcentagemOleoNatural)
+      : super(nome, peso, cor, sabor, diasDesdeColheita);
+
+  //Sobrescrita
+  @override
+  void fazerMassa() {
+    print('Tirar a casca');
+    super.fazerMassa(); //Repete a função normal após a alteração feita acima
+  }
+}
+
+//Classe Abstrata
+abstract class Bolo {
+  void separarIngredientes();
+  void fazerMassa();
+  void assar();
 }
