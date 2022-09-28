@@ -13,6 +13,17 @@ void main() {
   //Objetos
   Fruta fruta01 = Fruta(nome, peso, cor, sabor, diasDesdeColheita);
   Fruta fruta02 = Fruta('Laranja', 40, 'Laranja', 'Citrica', 20);
+
+  Legumes mandioca1 = Legumes('Macaxeira', 1200, 'Marrom', true);
+  Fruta banana1 = Fruta('Banana', 75, 'Amarela', 'Doce', 12);
+  Citricas limao1 = Citricas('Limão', 100, 'Verde', 'Azedo', 5, 9);
+
+  banana1.printAlimento();
+  mandioca1.printAlimento();
+  limao1.printAlimento();
+
+  mandioca1.cozinhar();
+  limao1.existeRefri(true);
 }
 
 //Função
@@ -38,23 +49,69 @@ mostraMadura({String? nome, required int dias, String cor = 'Sem cor'}) {
   print('A $nome é $cor');
 }
 
-//Classe (Objeto)
-class Fruta {
+//Classe pai (Objeto)
+class Alimento {
   String nome;
   double peso;
   String cor;
+
+  Alimento(this.nome, this.peso, this.cor);
+
+  void printAlimento() {
+    print('Este(a} $nome pesa $peso gramas e é $cor');
+  }
+}
+
+//Classe filha de Alimento (Objeto/Herança)
+class Fruta extends Alimento {
   String sabor;
   int diasDesdeColheita;
   bool? isMadura;
 
   //Construtor (Parâmetros da classe)
-  Fruta(this.nome, this.peso, this.cor, this.sabor, this.diasDesdeColheita,
-      {this.isMadura});
+  Fruta(
+      String nome, double peso, String cor, this.sabor, this.diasDesdeColheita,
+      {this.isMadura})
+      : super(nome, peso, cor);
 
   //Métodos (funções da classe)
   void estaMadura(int diasParaMadura) {
     isMadura = diasDesdeColheita >= diasParaMadura;
     print(
         'A sua $nome foi colhida a $diasDesdeColheita dias, e precisa de $diasParaMadura para poder comer. Ela esta madura? $isMadura');
+  }
+}
+
+//Classe filha de Alimento (Objeto/Herança)
+class Legumes extends Alimento {
+  bool isPrecisaCozinhar;
+
+  Legumes(String nome, double peso, String cor, this.isPrecisaCozinhar)
+      : super(nome, peso, cor);
+
+  void cozinhar() {
+    if (isPrecisaCozinhar) {
+      print('O $nome está cozinhando');
+    } else {
+      print('Nem precisa cozinhar!');
+    }
+  }
+}
+
+//Classe Alimento > Fruta > Citricas
+class Citricas extends Fruta {
+  double nivelAzedo;
+
+  Citricas(String nome, double peso, String cor, String sabor,
+      int diasDesdeColheita, this.nivelAzedo)
+      : super(nome, peso, cor, sabor,
+            diasDesdeColheita); //isMadura não é opcional na herança pai
+
+  void existeRefri(bool existe) {
+    if (existe) {
+      print('Existe refri de $nome');
+    } else {
+      print('Não existe refri de $nome');
+    }
   }
 }
